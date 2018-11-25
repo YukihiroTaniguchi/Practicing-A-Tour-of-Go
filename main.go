@@ -1,24 +1,19 @@
 package main
 
-import (
-	"fmt"
-	"strings"
+import "fmt"
 
-	"golang.org/x/tour/wc"
-)
+type IPAddr [4]byte
 
-func WordCount(s string) map[string]int {
-	string_fields := strings.Fields(s)
-	num := len(string_fields)
-	ret := make(map[string]int)
-	for i := 0; i < num; i++ {
-		(ret[string_fields[i]])++
-		fmt.Println(ret)
-	}
-
-	return ret
+func (a IPAddr) String() string {
+	return fmt.Sprintf("%d.%d.%d.%d", a[0], a[1], a[2], a[3])
 }
 
 func main() {
-	wc.Test(WordCount)
+	hosts := map[string]IPAddr{
+		"loopback":  {127, 0, 0, 1},
+		"googleDNS": {8, 8, 8, 8},
+	}
+	for name, ip := range hosts {
+		fmt.Printf("%v: %v\n", name, ip)
+	}
 }
